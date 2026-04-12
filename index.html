@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Lead Enrichment Agent – SNTL 84</title>
+  <meta name="description" content="Enrich startup leads with AI. Extract founder names, funding stages, LinkedIn profiles, and personalized outreach hooks. Built by SNTL 84 · desidevloper.com" />
+  <meta name="author" content="SNTL 84 · desidevloper.com" />
+  <!-- Favicon -->
+  <link rel="icon" href="https://desidevloper.com/favicon.ico" />
+  <style>
+    :root {
+      --brand: #00c896;
+      --brand-dark: #009e76;
+      --bg: #0d0d0d;
+      --card: #161616;
+      --border: #2a2a2a;
+      --text: #f0f0f0;
+      --muted: #888;
+      --danger: #ff4d4f;
+      --radius: 10px;
+      --font: 'Segoe UI', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font); min-height: 100vh; }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-dot {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--brand), #0077ff);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 14px; color: #000;
+      flex-shrink: 0;
+    }
+    .brand-name { font-size: 15px; font-weight: 700; color: var(--text); }
+    .brand-sub { font-size: 11px; color: var(--muted); }
+    .header-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .header-links a {
+      font-size: 11px; color: var(--brand); text-decoration: none;
+      border: 1px solid var(--brand); border-radius: 5px;
+      padding: 4px 10px; transition: background .2s;
+    }
+    .header-links a:hover { background: var(--brand); color: #000; }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 48px 24px 24px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(0,200,150,.12);
+      color: var(--brand);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(0,200,150,.3);
+      margin-bottom: 14px;
+    }
+    .hero h1 { font-size: clamp(24px, 5vw, 38px); font-weight: 800; color: var(--text); margin-bottom: 10px; }
+    .hero h1 span { color: var(--brand); }
+    .hero p { color: var(--muted); font-size: 14px; max-width: 480px; margin: 0 auto 8px; }
+    .hero-meta { color: #555; font-size: 11px; }
+
+    /* ── MAIN LAYOUT ── */
+    .main { max-width: 860px; margin: 0 auto; padding: 0 20px 60px; }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+    .card-label {
+      font-size: 10px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    /* ── FORM ELEMENTS ── */
+    input[type=password], textarea {
+      width: 100%;
+      background: #0a0a0a;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 13px;
+      padding: 10px 14px;
+      outline: none;
+      resize: vertical;
+      transition: border-color .2s;
+    }
+    input[type=password]:focus, textarea:focus { border-color: var(--brand); }
+    .key-note { font-size: 11px; color: #555; margin-top: 6px; }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: flex; gap: 16px; align-items: center;
+      padding: 12px 16px;
+      background: rgba(0,200,150,.05);
+      border: 1px solid rgba(0,200,150,.15);
+      border-radius: 8px;
+      flex-wrap: wrap;
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 18px;
+    }
+    .stats-bar .stat { display: flex; align-items: center; gap: 6px; }
+    .stat-val { color: var(--brand); font-weight: 700; font-size: 18px; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px; border-radius: 7px;
+      font-size: 13px; font-weight: 700; cursor: pointer;
+      border: none; transition: all .2s;
+    }
+    .btn-primary { background: var(--brand); color: #000; }
+    .btn-primary:hover { background: var(--brand-dark); }
+    .btn-primary:disabled { opacity: .4; cursor: not-allowed; }
+    .btn-outline { background: transparent; color: var(--brand); border: 1px solid var(--brand); }
+    .btn-outline:hover { background: rgba(0,200,150,.1); }
+    .btn-outline:disabled { opacity: .4; cursor: not-allowed; }
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* ── RESULTS ── */
+    .results-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .result-card {
+      background: #0f0f0f;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .result-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px; cursor: pointer; gap: 10px;
+    }
+    .result-header:hover { background: rgba(255,255,255,.03); }
+    .result-icon {
+      width: 30px; height: 30px; border-radius: 7px;
+      background: linear-gradient(135deg, var(--brand), #0077ff);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 12px; color: #000; flex-shrink: 0;
+    }
+    .result-company { font-size: 14px; font-weight: 700; }
+    .result-url { font-size: 11px; color: var(--muted); }
+    .result-status {
+      font-size: 10px; font-weight: 700; letter-spacing: .05em;
+      padding: 3px 9px; border-radius: 4px;
+    }
+    .status-done { background: rgba(0,200,150,.15); color: var(--brand); }
+    .status-pending { background: rgba(255,200,0,.12); color: #ffc800; }
+    .status-error { background: rgba(255,77,79,.12); color: var(--danger); }
+    .result-body { padding: 0 16px 14px; display: none; border-top: 1px solid var(--border); margin-top: 0; }
+    .result-body.open { display: block; padding-top: 14px; }
+    .result-body table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    .result-body td { padding: 6px 0; vertical-align: top; }
+    .result-body td:first-child { color: var(--muted); width: 130px; text-transform: uppercase; font-size: 10px; font-weight: 700; letter-spacing: .06em; }
+    .result-body td:last-child { color: var(--text); }
+    .hook-box {
+      margin-top: 10px;
+      padding: 12px 14px;
+      background: rgba(0,200,150,.07);
+      border-left: 3px solid var(--brand);
+      border-radius: 0 6px 6px 0;
+      font-size: 13px; color: #ccc; line-height: 1.6;
+    }
+    .hook-label { font-size: 10px; font-weight: 700; color: var(--brand); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 5px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center; padding: 20px;
+      font-size: 11px; color: #444;
+    }
+    footer a { color: var(--brand); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── LOADER ── */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner {
+      width: 14px; height: 14px;
+      border: 2px solid rgba(0,200,150,.3);
+      border-top-color: var(--brand);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="brand">
+    <div class="brand-dot">S84</div>
+    <div>
+      <div class="brand-name">SNTL 84 · AI AUTOMATION TOOLS</div>
+      <div class="brand-sub">AI Systems · Full-Stack Builds · Supply Chain Intelligence</div>
+    </div>
+  </div>
+  <div class="header-links">
+    <a href="https://desidevloper.com/" target="_blank">🌐 Website</a>
+    <a href="https://wa.me/919727413309" target="_blank">💬 WhatsApp</a>
+    <a href="https://www.linkedin.com/in/sntl2784" target="_blank">🔗 LinkedIn</a>
+    <a href="https://github.com/SNTL84" target="_blank">💻 GitHub</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">SNTL 84 · AI AUTOMATION TOOLS</div>
+  <h1>Lead Enrichment <span>Agent</span></h1>
+  <p>Enrich startup leads with founder names, funding stage, LinkedIn profiles &amp; personalized outreach hooks.</p>
+  <div class="hero-meta">~$0.001 per company · Built for founders who move fast and waste nothing.</div>
+</div>
+
+<div class="main">
+
+  <!-- STATS BAR -->
+  <div class="stats-bar" id="statsBar" style="display:none">
+    <div class="stat"><span class="stat-val" id="statDone">0</span> / <span id="statTotal">0</span> enriched</div>
+    <div class="stat"><span id="statTokens">0</span> tokens · ~$<span id="statCost">0.000000</span> est. cost</div>
+  </div>
+
+  <!-- API KEY -->
+  <div class="card">
+    <div class="card-label">API KEY</div>
+    <input type="password" id="apiKey" placeholder="sk-ant-api03-..." autocomplete="off" />
+    <div class="key-note">Your key is used directly in-browser. Not stored anywhere.</div>
+  </div>
+
+  <!-- COMPANY LIST -->
+  <div class="card">
+    <div class="card-label">COMPANY LIST — one per line: Name, Website, Notes(optional)</div>
+    <textarea id="companyInput" rows="7" placeholder="Groww, https://groww.in
+Zepto, https://zeptonow.com
+Mamaearth, https://mamaearth.in">Groww, https://groww.in
+Zepto, https://zeptonow.com
+Mamaearth, https://mamaearth.in
+Nua, https://nua.in
+Agrostar, https://agrostar.in
+Exiito Beverages, https://www.exiitobeverages.com
+Marvel Decor Limited, www.mdl.com</textarea>
+    <div class="key-note" id="companyCount">7 companies detected</div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="btn-row" style="margin-bottom:20px">
+    <button class="btn btn-primary" id="runBtn" onclick="runEnrichment()">▶ RUN ENRICHMENT</button>
+    <button class="btn btn-outline" id="csvBtn" onclick="downloadCSV()" disabled>↓ CSV</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-label" id="resultsLabel" style="display:none">RESULTS — CLICK A CARD TO EXPAND</div>
+  <div id="results"></div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  Built by <a href="https://desidevloper.com/" target="_blank">SNTL 84</a> ·
+  <a href="https://wa.me/919727413309" target="_blank">WhatsApp</a> ·
+  <a href="https://www.linkedin.com/in/sntl2784" target="_blank">LinkedIn</a> ·
+  <a href="https://github.com/SNTL84" target="_blank">GitHub</a>
+</footer>
+
+<script>
+// ──────────────────────────────────────────
+// SNTL 84 · AI Lead Enrichment Agent
+// desidevloper.com
+// ──────────────────────────────────────────
+
+let enrichedData = [];
+let totalTokens = 0;
+let totalCost = 0;
+
+const MODEL = 'claude-haiku-4-5';
+const API_URL = 'https://api.anthropic.com/v1/messages';
+
+function parseCompanies(raw) {
+  return raw.split('\n')
+    .map(l => l.trim())
+    .filter(Boolean)
+    .map(line => {
+      const parts = line.split(',').map(s => s.trim());
+      return { name: parts[0], url: parts[1] || '', notes: parts[2] || '' };
+    });
+}
+
+function updateCompanyCount() {
+  const companies = parseCompanies(document.getElementById('companyInput').value);
+  document.getElementById('companyCount').textContent = companies.length + ' companies detected';
+}
+document.getElementById('companyInput').addEventListener('input', updateCompanyCount);
+
+function updateStats(done, total, tokens, cost) {
+  document.getElementById('statsBar').style.display = 'flex';
+  document.getElementById('statDone').textContent = done;
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statTokens').textContent = tokens.toLocaleString();
+  document.getElementById('statCost').textContent = cost.toFixed(6);
+}
+
+function renderCard(company, status, data, idx) {
+  const container = document.getElementById('results');
+  let cardEl = document.getElementById('rc-' + idx);
+  if (!cardEl) {
+    cardEl = document.createElement('div');
+    cardEl.className = 'result-card';
+    cardEl.id = 'rc-' + idx;
+    container.appendChild(cardEl);
+  }
+  const statusClass = status === 'DONE' ? 'status-done' : status === 'ERROR' ? 'status-error' : 'status-pending';
+  const icon = (company.name || '?')[0].toUpperCase();
+  const bodyContent = data ? `
+    <div class="result-body" id="rb-${idx}">
+      <table>
+        <tr><td>FOUNDER / CEO</td><td>${data.founder || 'Unknown'}</td></tr>
+        <tr><td>LINKEDIN</td><td>${data.linkedin ? `<a href="${data.linkedin}" target="_blank" style="color:var(--brand)">${data.linkedin}</a>` : 'Not found'}</td></tr>
+        <tr><td>WEBSITE STATUS</td><td>${data.website_status || 'Unknown'}</td></tr>
+        <tr><td>SECTOR</td><td>${data.sector || 'Unknown'}</td></tr>
+        <tr><td>HQ CITY</td><td>${data.hq_city || 'Unknown'}</td></tr>
+        <tr><td>FUNDING STAGE</td><td>${data.funding_stage || 'Unknown'}</td></tr>
+        <tr><td>ONE-LINER</td><td>${data.one_liner || ''}</td></tr>
+      </table>
+      <div class="hook-box"><div class="hook-label">💬 OUTREACH HOOK</div>${data.outreach_hook || ''}</div>
+    </div>` : '';
+  cardEl.innerHTML = `
+    <div class="result-header" onclick="toggleCard(${idx})">
+      <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+        <div class="result-icon">${icon}</div>
+        <div style="min-width:0">
+          <div class="result-company">${company.name}</div>
+          <div class="result-url">${company.url}</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        ${status === 'PENDING' ? '<div class="spinner"></div>' : ''}
+        <span class="result-status ${statusClass}">${status}</span>
+        ${data ? '<span style="color:#555;font-size:12px">' + (document.getElementById('rb-'+idx)?.classList.contains('open') ? '▲' : '▼') + '</span>' : ''}
+      </div>
+    </div>
+    ${bodyContent}`;
+}
+
+function toggleCard(idx) {
+  const body = document.getElementById('rb-' + idx);
+  if (body) body.classList.toggle('open');
+}
+
+async function enrichCompany(apiKey, company) {
+  const prompt = `You are a B2B sales researcher. For the company below, return ONLY valid JSON with these fields:
+- founder (string: CEO/Founder full name or "Unknown")
+- linkedin (string: founder LinkedIn URL or null)
+- website_status (string: "Active", "Inactive", or "Unknown")
+- sector (string: industry/sector)
+- hq_city (string: city or "Unknown")
+- funding_stage (string: Seed/Series A/B/C/etc or "Unknown")
+- one_liner (string: one sentence about the company)
+- outreach_hook (string: personalized 1-sentence outreach message referencing their sector/product, pitching AI automation services)
+
+Company: ${company.name}
+Website: ${company.url}
+Notes: ${company.notes || 'None'}
+
+Return ONLY JSON, no markdown, no explanation.`;
+
+  const resp = await fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: MODEL,
+      max_tokens: 600,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  });
+
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({}));
+    throw new Error(err.error?.message || resp.statusText);
+  }
+
+  const json = await resp.json();
+  const raw = json.content?.[0]?.text || '{}';
+  const usage = json.usage || {};
+  const tokens = (usage.input_tokens || 0) + (usage.output_tokens || 0);
+  const cost = tokens * 0.000001;
+
+  let data;
+  try { data = JSON.parse(raw); }
+  catch { data = { one_liner: raw, outreach_hook: '' }; }
+
+  return { data, tokens, cost };
+}
+
+async function runEnrichment() {
+  const apiKey = document.getElementById('apiKey').value.trim();
+  if (!apiKey) { alert('Please enter your API key.'); return; }
+  const companies = parseCompanies(document.getElementById('companyInput').value);
+  if (!companies.length) { alert('Please enter at least one company.'); return; }
+
+  enrichedData = [];
+  totalTokens = 0;
+  totalCost = 0;
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('resultsLabel').style.display = 'block';
+  document.getElementById('csvBtn').disabled = true;
+  document.getElementById('runBtn').disabled = true;
+
+  let done = 0;
+  for (let i = 0; i < companies.length; i++) {
+    renderCard(companies[i], 'PENDING', null, i);
+  }
+  updateStats(0, companies.length, 0, 0);
+
+  for (let i = 0; i < companies.length; i++) {
+    try {
+      const { data, tokens, cost } = await enrichCompany(apiKey, companies[i]);
+      enrichedData.push({ ...companies[i], ...data });
+      totalTokens += tokens;
+      totalCost += cost;
+      done++;
+      renderCard(companies[i], 'DONE', data, i);
+    } catch (e) {
+      enrichedData.push({ ...companies[i], error: e.message });
+      renderCard(companies[i], 'ERROR', { one_liner: e.message, outreach_hook: '' }, i);
+      done++;
+    }
+    updateStats(done, companies.length, totalTokens, totalCost);
+  }
+
+  document.getElementById('runBtn').disabled = false;
+  document.getElementById('csvBtn').disabled = false;
+}
+
+function downloadCSV() {
+  if (!enrichedData.length) return;
+  const headers = ['Name','URL','Notes','Founder','LinkedIn','Website Status','Sector','HQ City','Funding Stage','One-Liner','Outreach Hook'];
+  const rows = enrichedData.map(d => [
+    d.name, d.url, d.notes,
+    d.founder, d.linkedin, d.website_status,
+    d.sector, d.hq_city, d.funding_stage,
+    d.one_liner, d.outreach_hook
+  ].map(v => '"' + String(v || '').replace(/"/g, '""') + '"'));
+  const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'sntl84-lead-enrichment.csv';
+  a.click();
+}
+
+// init count
+updateCompanyCount();
+</script>
+</body>
+</html>
