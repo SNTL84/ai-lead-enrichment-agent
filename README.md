@@ -1,67 +1,72 @@
 # 🚀 AI Lead Enrichment Agent
 
-> **Built by [SNTL 84](https://desidevloper.com/) · AI Workflow Developer · Surat, India**
+> **Enrich startup leads with founder names, funding stages, LinkedIn profiles & outreach hooks** — Built by SNTL 84 · desidevloper.com
 
-Enrich startup leads with AI — extract founder names, funding stages, LinkedIn profiles, and personalized outreach hooks. Built for founders who move fast and waste nothing.
+[![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-View%20Now-25d366?style=for-the-badge)](https://sntl84.github.io/ai-lead-enrichment-agent/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/sntl2784)
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-Hire%20Me-25D366?style=for-the-badge&logo=whatsapp)](https://wa.me/919727413309)
+[![Website](https://img.shields.io/badge/Website-desidevloper.com-FF6B35?style=for-the-badge)](https://desidevloper.com)
+
+---
+
+## 🎯 What Is This?
+
+A browser-based **AI lead enrichment tool** that takes raw startup/company data and enriches it with:
+- Founder names & LinkedIn profiles
+- Funding stages & investment rounds
+- Personalized outreach hooks
+- Industry tags & company signals
+
+Perfect for SDRs, sales teams, and growth hackers doing cold outreach at scale.
 
 ---
 
 ## ✨ Features
 
-- 🔍 **Auto-enriches** company name, website, sector, HQ city, funding stage
-- 👤 **Extracts** Founder / CEO name and LinkedIn URL
-- 💬 **Generates** personalized outreach hooks per company
-- 📊 **Live token + cost tracker** (~$0.001 per company)
-- 📥 **CSV export** with one click
-- 🔑 API key used in-browser only — never stored
+| Feature | Description |
+|---------|-------------|
+| 🦏 Startup Enrichment | Auto-fill founder, funding, LinkedIn |
+| 🎯 Outreach Hook Generator | AI-crafted personalized openers |
+| 📊 Bulk Processing | Enrich multiple leads in one session |
+| 📥 Export Ready | Download enriched list |
+| ⚡ Zero Backend | 100% browser-based |
+| 💰 No API Cost | Free to run |
 
 ---
 
-## 🛠 How to Use
+## 🚀 Quick Start
 
-1. Open `index.html` in your browser (or deploy to any static host)
-2. Enter your API key in the field provided
-3. Paste your company list (Name, Website, Notes — one per line)
-4. Click **▶ RUN ENRICHMENT**
-5. Download results as **CSV**
+**Live Demo:** [Click here →](https://sntl84.github.io/ai-lead-enrichment-agent/)
 
----
-
-## 📋 Input Format
-
-```
-Company Name, https://website.com, optional notes
-Groww, https://groww.in
-Zepto, https://zeptonow.com
-Mamaearth, https://mamaearth.in
+```bash
+git clone https://github.com/SNTL84/ai-lead-enrichment-agent.git
+open index.html
 ```
 
 ---
 
-## 💰 Pricing
+## 🤝 Contributing
 
-| Item | Cost |
-|------|------|
-| Per company enrichment | ~$0.001 |
-| 100 companies | ~$0.10 |
-| 1,000 companies | ~$1.00 |
+See **[CONTRIBUTING.md](./CONTRIBUTING.md)** for setup, ideas & PR guide.
 
 ---
 
-## 🤝 Hire Me
+## 📞 Connect
 
 | Channel | Link |
 |---------|------|
-| 🌐 Website | [desidevloper.com](https://desidevloper.com/) |
-| 💬 WhatsApp | [wa.me/919727413309](https://wa.me/919727413309) |
-| 🔗 LinkedIn | [linkedin.com/in/sntl2784](https://www.linkedin.com/in/sntl2784) |
-| 💻 GitHub | [github.com/SNTL84](https://github.com/SNTL84) |
+| 🌐 Website | [desidevloper.com](https://desidevloper.com) |
+| 💼 LinkedIn | [linkedin.com/in/sntl2784](https://www.linkedin.com/in/sntl2784) |
+| 💬 WhatsApp | [+91 97274 13309](https://wa.me/919727413309) |
+| 📧 Email | 3goldenlotusroots@gmail.com |
+| 🐙 GitHub | [@SNTL84](https://github.com/SNTL84) |
 
 ---
 
-## 📄 License
+## ⭐ Support
 
-MIT © [SNTL 84 · desidevloper.com](https://desidevloper.com/)
+Star ⭐ this repo and share with sales & growth teams!
 
-> *AI Systems | Full-Stack Builds | Supply Chain Business Intelligence*
-> *Built for founders who move fast and waste nothing.*
+---
+
+*Built with ❤️ by **Milan · SNTL 84** · Surat, India 🇮🇳 · "Automate What's Costing You Money"*
